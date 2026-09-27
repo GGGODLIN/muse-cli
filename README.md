@@ -9,6 +9,7 @@ Talk to your personal muse.ai AI agent from the terminal.
 [![Downloads](https://img.shields.io/pepy/dt/muse-cli?style=for-the-badge)](https://pepy.tech/project/muse-cli)
 [![License: MIT](https://img.shields.io/github/license/nikships/muse-cli?style=for-the-badge)](https://github.com/nikships/muse-cli/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/nikships/muse-cli?style=for-the-badge)](https://github.com/nikships/muse-cli/stargazers)
+[![Website](https://img.shields.io/badge/website-live-3fb950?style=for-the-badge)](https://muse-cli-site.web.app)
 
 ![muse-cli hero](https://raw.githubusercontent.com/nikships/muse-cli/main/assets/hero.webp)
 
@@ -22,6 +23,14 @@ A command-line client for your personal muse.ai AI agent: chat from the terminal
 - **Script it:** every command prints JSON, so it pipes into `jq`, cron jobs, and other AI agents.
 - **Full coverage:** named commands for the common tasks, plus a `raw` escape hatch for all 258 gateway methods.
 - **Agent-ready:** ships an agent skill so coding agents can drive your muse.ai agent for you.
+
+## Agents driving agents
+
+Prompt a coding agent, it activates the muse-cli skill and runs read-only
+commands for you. Live session below: a Droid worker runs `muse-cli status`
+and `muse-cli goals`, then reports back.
+
+![Droid agent using muse-cli to check status and goals](https://raw.githubusercontent.com/nikships/muse-cli/main/assets/demo-agent.png)
 
 ## Quick Start
 

@@ -14,3 +14,6 @@ config.json
 
 # OS
 .DS_Store
+
+# Firebase local cache
+.firebase/

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>muse-cli — talk to your Muse agent from the terminal</title>
+<meta name="description" content="A command-line client for your personal muse.ai AI agent: chat, automate, and manage side chats, feed, goals, ideas, and sessions from the terminal. No browser needed." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="muse-cli" />
+<meta property="og:description" content="Chat with your personal muse.ai AI agent from the terminal. Every command prints JSON. Ships an agent skill." />
+<meta property="og:image" content="https://muse-cli-site.web.app/hero.webp" />
+<meta property="og:url" content="https://muse-cli-site.web.app/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="muse-cli" />
+<meta name="twitter:description" content="Chat with your personal muse.ai AI agent from the terminal." />
+<meta name="twitter:image" content="https://muse-cli-site.web.app/hero.webp" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='8' y='8' width='84' height='84' rx='18' fill='%23141828'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%2358a6ff' font-family='monospace'>&gt;_</text></svg>" />
+<style>
+  :root { --bg:#070b14; --panel:#0d1424; --line:#1c2942; --text:#e8eef7; --dim:#93a1b8; --blue:#58a6ff; --green:#3fb950; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif; line-height:1.6; }
+  .wrap { max-width:880px; margin:0 auto; padding:0 24px 80px; }
+  header.hero { text-align:center; padding:56px 0 8px; }
+  header.hero img.banner { width:100%; border-radius:16px; border:1px solid var(--line); }
+  header.hero h1 { font-size:2.4rem; margin:28px 0 8px; letter-spacing:-0.02em; }
+  header.hero p.tag { color:var(--dim); font-size:1.15rem; }
+  .badges { margin:20px 0 8px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .badges img { height:28px; }
+  .cta { margin:26px 0 10px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .btn { display:inline-block; padding:12px 26px; border-radius:10px; font-weight:600; text-decoration:none; font-size:1rem; }
+  .btn.primary { background:var(--green); color:#04120a; }
+  .btn.ghost { border:1px solid var(--line); color:var(--text); background:var(--panel); }
+  section { margin-top:56px; }
+  h2 { font-size:1.4rem; margin-bottom:16px; letter-spacing:-0.01em; }
+  p, li { color:#c9d4e6; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:8px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px; }
+  .card h3 { font-size:1rem; margin-bottom:6px; color:var(--text); }
+  .card p { font-size:.92rem; color:var(--dim); }
+  pre { background:#0a0f1c; border:1px solid var(--line); border-radius:12px; padding:16px 16px 16px 18px; overflow-x:auto; position:relative; margin:12px 0; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86rem; color:#d6e2f5; }
+  .copy { position:absolute; top:10px; right:10px; background:#16203a; color:var(--dim); border:1px solid var(--line); border-radius:8px; padding:4px 10px; font-size:.75rem; cursor:pointer; }
+  .copy:hover { color:var(--text); border-color:var(--blue); }
+  img.shot { width:100%; border-radius:12px; border:1px solid var(--line); margin-top:12px; }
+  .caption { color:var(--dim); font-size:.85rem; margin-top:8px; text-align:center; }
+  footer { margin-top:72px; padding-top:24px; border-top:1px solid var(--line); color:var(--dim); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  footer a { color:var(--blue); text-decoration:none; }
+  a.inline { color:var(--blue); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <img class="banner" src="hero.webp" alt="muse-cli artwork" />
+    <h1>muse-cli</h1>
+    <p class="tag">Talk to your personal muse.ai AI agent from the terminal.</p>
+    <div class="badges">
+      <a href="https://pypi.org/project/muse-cli/"><img src="https://img.shields.io/pypi/v/muse-cli?style=for-the-badge" alt="PyPI" /></a>
+      <a href="https://github.com/nikships/muse-cli"><img src="https://img.shields.io/github/stars/nikships/muse-cli?style=for-the-badge" alt="stars" /></a>
+      <a href="https://github.com/nikships/muse-cli/blob/main/LICENSE"><img src="https://img.shields.io/github/license/nikships/muse-cli?style=for-the-badge" alt="license" /></a>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/nikships/muse-cli">View on GitHub</a>
+      <a class="btn ghost" href="https://pypi.org/project/muse-cli/">PyPI</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Install</h2>
+    <pre><button class="copy" onclick="copy(this)">copy</button><code>uv tool install muse-cli      # or: pipx install muse-cli / pip install muse-cli</code></pre>
+    <p>One-time login borrows the session you already have in Chrome (<a class="inline" href="https://github.com/nikships/muse-cli#log-in-once">details</a>), then no browser needed:</p>
+    <pre><button class="copy" onclick="copy(this)">copy</button><code>muse-cli auth export
+muse-cli status</code></pre>
+  </section>
+
+  <section>
+    <h2>Agents driving agents</h2>
+    <p>muse-cli ships an agent skill, so a coding agent can drive your Muse agent for you. Here is a live session: prompt a Droid worker, it activates the skill, runs <code>muse-cli status</code> and <code>muse-cli goals</code>, and reports back.</p>
+    <img class="shot" src="demo-agent.png" alt="Droid agent using muse-cli to check status and goals" />
+    <p class="caption">Droid worker using the muse-cli skill: status + goals, read-only.</p>
+  </section>
+
+  <section>
+    <h2>Usage</h2>
+    <pre><button class="copy" onclick="copy(this)">copy</button><code>muse-cli threads                                  # main chat + side chats
+muse-cli history --limit 5                        # recent messages
+muse-cli send "summarize my unread" --wait 120    # send + wait for reply
+muse-cli watch --timeout 60                       # tail live agent events
+
+muse-cli feed --limit 5
+muse-cli goals
+muse-cli ideas
+muse-cli idea-exec &lt;idea-id&gt;                      # agent acts on the idea
+
+muse-cli session-start --title "trip planning"    # new side chat
+muse-cli raw &lt;method&gt; --body '{}'                 # escape hatch: 258 methods</code></pre>
+    <p>Every command prints JSON. Pipe it anywhere:</p>
+    <pre><button class="copy" onclick="copy(this)">copy</button><code>muse-cli send "what's on my calendar today?" | jq -r .reply.text</code></pre>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="grid">
+      <div class="card"><h3>🔐 HTTPS auth</h3><p>Borrows your Chrome login once, then fetches fresh access and gateway tokens on every run.</p></div>
+      <div class="card"><h3>🔒 Noise-XX transport</h3><p>Speaks the app's own gateway protocol: an encrypted Noise-XX WebSocket straight to your personal VM.</p></div>
+      <div class="card"><h3>📜 JSON everything</h3><p>Every command prints JSON, so it pipes into jq, cron jobs, and other AI agents.</p></div>
+      <div class="card"><h3>🤖 Agent skill included</h3><p>Installs a skill file so coding agents can check, message, and automate your Muse agent.</p></div>
+      <div class="card"><h3>🕳️ 258-method escape hatch</h3><p>Named commands for the common tasks, plus <code>muse-cli raw</code> for every gateway method.</p></div>
+      <div class="card"><h3>🔄 Self-updating</h3><p>Notices new PyPI releases once a day in a terminal; upgrade with <code>muse-cli update</code>.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>MIT · by <a href="https://github.com/nikships">nikships</a></span>
+    <span><a href="https://github.com/nikships/muse-cli">Star it on GitHub →</a></span>
+  </footer>
+
+</div>
+<script>
+function copy(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='copied'; setTimeout(()=>btn.textContent='copy',1500);
+  });
+}
+</script>
+</body>
+</html>
