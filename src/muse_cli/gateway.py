@@ -156,7 +156,9 @@ class Gateway:
         url = (f"wss://{GATEWAY_HOST}/v1/noise?vm_id={vm_id}"
                f"&auth_token={urllib.parse.quote(hatch_token, safe='')}")
         self.ws = WebSocket()
-        self.ws.connect(url, impersonate="chrome", timeout=20)
+        # verify=True is required: curl_cffi's WebSocket.connect defaults to
+        # verify=None, which disables TLS certificate verification entirely.
+        self.ws.connect(url, impersonate="chrome", timeout=20, verify=True)
         noise = NoiseConnection.from_name(b"Noise_XX_25519_AESGCM_SHA256")
         noise.set_as_initiator()
         noise.set_keypair_from_private_bytes(Keypair.STATIC, os.urandom(32))
