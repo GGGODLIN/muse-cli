@@ -592,6 +592,19 @@ def cmd_wake(_args):
     out({"status": resp.status_code, "body": resp.json() if resp.text else None})
 
 
+def cmd_usage(_args):
+    from .usage import fetch_usage
+    cfg = load_config()
+    try:
+        out(fetch_usage(load_cookies(cfg["cookies_file"]),
+                        os.path.join(CONFIG_DIR, "usage-action.json")))
+    except AuthError:
+        raise
+    except RuntimeError as e:
+        print(f"usage error: {e}", file=sys.stderr)
+        sys.exit(5)
+
+
 def cmd_raw(args):
     from .gateway import ROUTES
     if args.method not in ROUTES:
@@ -697,6 +710,7 @@ def main():
             p.add_argument("title")
         p.set_defaults(fn=cmd_session_op(kind))
     sub.add_parser("wake", help="request a VM wake").set_defaults(fn=cmd_wake)
+    sub.add_parser("usage", help="weekly usage, reset time, top-up balance").set_defaults(fn=cmd_usage)
     sub.add_parser("update", help="upgrade this install to the latest release").set_defaults(fn=cmd_update)
     p = sub.add_parser("raw", help="call any gateway method (escape hatch)")
     p.add_argument("method"); p.add_argument("--body", default=None)

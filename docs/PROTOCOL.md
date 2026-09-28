@@ -74,6 +74,16 @@ chat / feed / goals / ideas / sessions / ...
   delete: `{method: "/api/session/<op>", session_id}`.
 - `api.idea-cards.execute`: `{ideaCardId, mode: "full"}` plus path param.
 - POSTs to muse.ai need browser `Sec-Fetch-*` headers or they return 403.
+- Usage (Settings > General > Usage) is not a gateway method or a REST route.
+  The web app reads it through a Next.js server action: `POST https://muse.ai/`
+  with `next-action: <id>`, `Accept: text/x-component`, body
+  `[{"includeAgreement":true}]`. The RSC reply's `1:` line is JSON with
+  `subscription.usage.percentUsed`, `resetsAt` and the top-up balance. The
+  action ID changes per deploy; a stale one gets `404` with
+  `x-nextjs-action-not-found: 1`. The current ID is the
+  `createServerReference("<id>", …, "fetchSubscriptionAction")` call in a
+  lazy-loaded chunk, reachable by following `static/chunks/*.js` references
+  from the shell's scripts (about 230 chunks deep on 2026-09-28).
 - `auth export` reads cookies from the user's own Google Chrome through
   agent-browser `--auto-connect`. Chrome 144+ shares that profile only after
   remote debugging is enabled at `chrome://inspect/#remote-debugging`. The

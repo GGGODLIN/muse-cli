@@ -143,6 +143,7 @@ muse-cli goals
 muse-cli ideas
 muse-cli unread
 muse-cli seen <thread-id>
+muse-cli usage                                          # weekly % used, reset time, top-up balance
 ```
 
 Management (visible side effects, confirm with the user first when destructive):

@@ -177,6 +177,7 @@ muse-cli session-rename <id> "new title"
 muse-cli session-archive <id>                     # also: pin, unpin, unarchive, delete
 muse-cli seen <thread-id>
 muse-cli wake
+muse-cli usage                                    # weekly % used, reset time, top-up balance
 muse-cli raw <method> --body '{}'                 # escape hatch: any of 258 gateway methods
 ```
 
